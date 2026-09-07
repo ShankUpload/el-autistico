@@ -141,6 +141,54 @@
         rgba(184, 134, 11, .4);
 }
 
+/* =========================
+   HERO CARD
+========================= */
+
+.player-card.hero-card {
+    background:
+        linear-gradient(
+            145deg,
+            #b8ff3d 0%,
+            #72c92e 25%,
+            #f39a19 65%,
+            #d85b0b 100%
+        );
+
+    color: #173d16;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        inset 0 0 25px rgba(255,255,255,.25);
+}
+
+/* TEKST HERO */
+.player-card.hero-card .player-rating .ovr,
+.player-card.hero-card .player-rating .position,
+.player-card.hero-card .player-name,
+.player-card.hero-card .player-club,
+.player-card.hero-card .stat b,
+.player-card.hero-card .stat span {
+    color: #173d16;
+
+    text-shadow:
+        0 1px 0 rgba(255,255,255,.45);
+}
+
+/* LINIA STATYSTYK */
+.player-card.hero-card .player-stats {
+    border-top:
+        1px solid
+        rgba(23,61,22,.55);
+}
+
+/* EFEKT HOVER */
+.player-card.hero-card:hover {
+    box-shadow:
+        0 25px 60px rgba(243,154,25,.5),
+        inset 0 0 30px rgba(255,255,255,.3);
+}
+
 
         .player-image {
 
@@ -1034,7 +1082,7 @@ const players = [
 
         club: "",
 
-        nation: "Ikona",
+        nation: "Polska",
 
         ovr: 95,
 
@@ -1059,6 +1107,42 @@ const players = [
         }
 
     },
+
+    {
+    name: "Maks Woźniak",
+    hero: true,
+    position: "CB",
+    club: "",
+    nation: "Polska",
+    ovr: 85,
+    image: "img/wozniak.png",
+    stats: {
+        PAC: 86,
+        SHO: 76,
+        PAS: 80,
+        DRI: 77,
+        DEF: 84,
+        PHY: 80
+    }
+},
+
+{
+    name: "Aleksander Wołos",
+    hero: true,
+    position: "ST",
+    club: "",
+    nation: "Polska",
+    ovr: 86,
+    image: "img/wolos.png",
+    stats: {
+        PAC: 70,
+        SHO: 87,
+        PAS: 80,
+        DRI: 74,
+        DEF: 60,
+        PHY: 80
+    }
+},
 
     {
 
@@ -1645,7 +1729,13 @@ function renderPlayers(list = players) {
 
 
         card.className =
-    `player-card ${player.icon ? "icon-card" : ""}`;
+    `player-card ${
+        player.icon
+            ? "icon-card"
+            : player.hero
+                ? "hero-card"
+                : ""
+    }`;
 
 
         card.innerHTML = `
