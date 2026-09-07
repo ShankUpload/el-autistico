@@ -107,6 +107,40 @@
 
         }
 
+        .player-card.icon-card {
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #e8e8e8 45%,
+            #b8b8b8
+        );
+
+    color: #b8860b;
+}
+
+/* ZŁOTY TEKST NA KARCIE ICON */
+.player-card.icon-card .player-rating .ovr,
+.player-card.icon-card .player-rating .position,
+.player-card.icon-card .player-name,
+.player-card.icon-card .player-club,
+.player-card.icon-card .stat b,
+.player-card.icon-card .stat span {
+    color: #b8860b;
+}
+
+/* ZŁOTA LINIA STATYSTYK */
+.player-card.icon-card .player-stats {
+    border-top: 1px solid rgba(184, 134, 11, .6);
+}
+
+/* ZŁOTY EFEKT PO NAJECHANIU */
+.player-card.icon-card:hover {
+    box-shadow:
+        0 25px 60px
+        rgba(184, 134, 11, .4);
+}
+
 
         .player-image {
 
@@ -994,6 +1028,40 @@ const players = [
 
     {
 
+        name: "Wiktor Jaszczak",
+        icon: true,
+        position: "ST",
+
+        club: "",
+
+        nation: "Ikona",
+
+        ovr: 95,
+
+        image:
+
+        "img/jaszczak.png",
+
+        stats: {
+
+            PAC: 85,
+
+            SHO: 97,
+
+            PAS: 94,
+
+            DRI: 99,
+
+            DEF: 60,
+
+            PHY: 91
+
+        }
+
+    },
+
+    {
+
         name: "Kuba Olczak",
 
         position: "CF",
@@ -1437,6 +1505,8 @@ const players = [
 
     },
 
+    
+
 
     {
 
@@ -1575,8 +1645,7 @@ function renderPlayers(list = players) {
 
 
         card.className =
-
-            "player-card";
+    `player-card ${player.icon ? "icon-card" : ""}`;
 
 
         card.innerHTML = `
