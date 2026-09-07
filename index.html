@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EL AUTISTICO</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(
+                    circle at top,
+                    #182b44 0%,
+                    #0b1220 45%,
+                    #060b14 100%
+                );
+
+            color: white;
+        }
+
+
+        /* =========================
+           FIFA PLAYER CARD
+        ========================= */
+
+        .player-card {
+
+            position: relative;
+
+            width: 260px;
+
+            min-height: 390px;
+
+            border-radius: 25px;
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #f5c84c,
+                    #c89019 45%,
+                    #5d3a00
+                );
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,.45);
+
+        }
+
+
+        .player-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            background:
+
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.25),
+                    transparent 65%
+                );
+
+            top: -100px;
+
+            left: -100px;
+
+            pointer-events: none;
+
+        }
+
+
+        .player-card:hover {
+
+            transform:
+                translateY(-15px)
+                scale(1.04);
+
+            box-shadow:
+
+                0 25px 60px
+                rgba(255, 193, 7, .35);
+
+        }
+
+
+        .player-image {
+
+            position: relative;
+
+            height: 220px;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+        }
+
+
+        .player-image img {
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform .4s ease;
+
+        }
+
+
+        .player-card:hover img {
+
+            transform:
+                scale(1.08);
+
+        }
+
+
+        .player-rating {
+
+            position: absolute;
+
+            top: 20px;
+
+            left: 20px;
+
+            text-align: center;
+
+        }
+
+
+        .player-rating .ovr {
+
+            font-size: 42px;
+
+            font-weight: 900;
+
+            line-height: 1;
+
+        }
+
+
+        .player-rating .position {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+
+        .player-info {
+
+            position: relative;
+
+            padding: 10px 20px 25px;
+
+            text-align: center;
+
+        }
+
+
+        .player-name {
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .player-club {
+
+            font-size: 13px;
+
+            opacity: .8;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .player-stats {
+
+            display:
+
+                grid;
+
+            grid-template-columns:
+
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            border-top:
+
+                1px solid
+                rgba(255,255,255,.35);
+
+            padding-top: 15px;
+
+        }
+
+
+        .stat {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .stat b {
+
+            font-size: 16px;
+
+        }
+
+
+        .stat span {
+
+            font-size: 10px;
+
+            opacity: .8;
+
+        }
+
+
+        /* NEWS */
+
+        .news-card {
+
+            transition:
+
+                transform .3s ease,
+                background .3s ease;
+
+        }
+
+
+        .news-card:hover {
+
+            transform:
+                translateY(-5px);
+
+        }
+
+
+        /* TABLE */
+
+        th {
+
+            cursor: pointer;
+
+        }
+
+
+        /* MATCH CARD */
+
+        .match-card {
+
+            transition:
+
+                transform .3s ease,
+                border-color .3s ease;
+
+        }
+
+
+        .match-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+
+                #3b82f6;
+
+        }
+
+
+        /* MODAL */
+
+        .modal {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+
+                rgba(0,0,0,.8);
+
+            backdrop-filter:
+
+                blur(10px);
+
+            z-index: 100;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+        }
+
+
+        .modal.active {
+
+            display: flex;
+
+        }
+
+
+        /* FOOTBALL PITCH */
+
+        .pitch {
+
+            position: relative;
+
+            min-height: 450px;
+
+            background:
+
+                linear-gradient(
+                    to bottom,
+                    #1f8f45,
+                    #147536
+                );
+
+            border:
+
+                4px solid white;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+        }
+
+
+        .pitch::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+
+                repeating-linear-gradient(
+
+                    to bottom,
+
+                    rgba(255,255,255,.05),
+
+                    rgba(255,255,255,.05) 40px,
+
+                    transparent 40px,
+
+                    transparent 80px
+
+                );
+
+        }
+
+
+        .pitch-line {
+
+            position: absolute;
+
+            top: 50%;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 2px;
+
+            background: white;
+
+        }
+
+
+        .player-dot {
+
+            position: absolute;
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            background:
+
+                #2563eb;
+
+            border:
+
+                2px solid white;
+
+            transform:
+
+                translate(-50%, -50%);
+
+            text-align: center;
+
+            padding: 3px;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur border-b border-slate-800">
+
+    <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+
+        <div class="flex items-center gap-3">
+
+            <div class="text-2xl font-black text-blue-500">
+
+                ⚽ EL<span class="text-white"> AUTISTICO</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="hidden md:flex gap-7 text-sm font-semibold text-slate-300">
+
+            <a href="#players" class="hover:text-blue-400">
+                Zawodnicy
+            </a>
+
+            <a href="#stats" class="hover:text-blue-400">
+                Statystyki
+            </a>
+
+            <a href="#matches" class="hover:text-blue-400">
+                Mecze
+            </a>
+
+            <a href="#news" class="hover:text-blue-400">
+                Aktualności
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<section
+    id="news"
+    class="bg-slate-950/60 border-y border-slate-800"
+>
+
+    <div class="max-w-7xl mx-auto px-5 py-16">
+
+        <!-- TYTUŁ NA GÓRZE -->
+
+        <div class="mb-10">
+
+            <h2 class="text-4xl font-black">
+
+                NAJNOWSZE WIADOMOŚCI
+
+            </h2>
+
+            <p class="text-slate-400 mt-2">
+
+                Najważniejsze wydarzenia, transfery i mecze
+
+            </p>
+
+        </div>
+
+
+        <!-- UKŁAD: WIADOMOŚCI LEWO + SZYBKIE INFO PRAWO -->
+
+        <div class="grid lg:grid-cols-4 gap-8 items-start">
+
+
+            <!-- WIADOMOŚCI -->
+
+            <div class="lg:col-span-3">
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+
+                    <article
+                        class="news-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden"
+                    >
+
+                        <img
+                            src="img/marcel-krzysiu.jpg"
+                            class="w-full h-72 object-cover"
+                        >
+
+                        <div class="p-6">
+
+                            <span class="text-blue-400 text-sm font-bold">
+
+                                TRANSFERY
+
+                            </span>
+
+                            <h3 class="text-xl font-bold mt-2">
+
+                                Transfer Kosiewicza za 20zł G4SKINS
+
+                            </h3>
+
+                            <p class="text-slate-400 text-sm mt-3">
+
+                                Klub sfinalizował rozmowy dotyczące
+                                transferu jednego z najlepszych zawodników.
+
+                            </p>
+
+                            <div class="text-slate-500 text-xs mt-4">
+
+                                19 września 2024
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="news-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden"
+                    >
+
+                        <img
+                            src="img/lichy.jpg"
+                            class="w-full h-72 object-cover"
+                        >
+
+                        <div class="p-6">
+
+                            <span class="text-green-400 text-sm font-bold">
+
+                                TRANSFER 
+
+                            </span>
+
+                            <h3 class="text-xl font-bold mt-2">
+
+                                Niesamowita kariera Jana Lichoty dobiega końca w Borucie Zgierz
+
+                            </h3>
+
+                            <p class="text-slate-400 text-sm mt-3">
+
+                                Jan Lichota zdecydował się na transfer z Boruty Zgierz do ???
+
+                            </p>
+
+                            <div class="text-slate-500 text-xs mt-4">
+
+                                6 września 2026
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- SZYBKIE INFORMACJE PO PRAWEJ -->
+
+            <aside
+                class="bg-slate-900/50 border border-slate-800 rounded-2xl p-5"
+            >
+
+                <h2 class="text-xl font-black mb-5">
+
+                    ⚡ SZYBKIE INFO
+
+                </h2>
+
+
+                <div class="space-y-4">
+
+
+                    <div
+                        class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-xl"
+                    >
+
+                        <div class="text-xs text-blue-400 font-bold">
+
+                            PRZED CHWILĄ
+
+                        </div>
+
+                        <div class="font-bold text-sm mt-2">
+
+                            POWRÓT EL AUTISTICO
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="bg-slate-900 border-l-4 border-green-400 p-4 rounded-r-xl"
+                    >
+
+                        <div class="text-xs text-green-400 font-bold">
+
+                            MECZ
+
+                        </div>
+
+                        <div class="font-bold text-sm mt-2">
+
+                            Dzisiejszy hit rozpocznie się o 09:10.
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </aside>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ===================== -->
+<!-- PLAYERS -->
+<!-- ===================== -->
+
+<section id="players" class="max-w-7xl mx-auto px-5 py-16">
+
+
+    <div class="flex flex-col md:flex-row justify-between gap-6 mb-10">
+
+        <div>
+
+            <h2 class="text-4xl font-black">
+
+                KARTY ZAWODNIKÓW
+
+            </h2>
+
+            <p class="text-slate-400 mt-2">
+
+                Najlepsi piłkarze w stylu EA FC
+
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="flex flex-wrap gap-3">
+
+            <input
+
+                id="search"
+
+                type="text"
+
+                placeholder="Szukaj zawodnika..."
+
+                class="bg-slate-900 border border-slate-700 px-4 py-3 rounded-xl outline-none focus:border-blue-500"
+
+            >
+
+
+            <select
+                id="positionFilter"
+                class="bg-slate-900 border border-slate-700 px-4 rounded-xl"
+            >
+
+                <option value="">
+                    Wszystkie pozycje
+                </option>
+
+                <option value="ST">
+                    ST
+                </option>
+
+                <option value="CM">
+                    CM
+                </option>
+
+                <option value="CB">
+                    CB
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+
+    <div
+        id="playersContainer"
+        class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center"
+    ></div>
+
+
+</section>
+
+
+
+<!-- ===================== -->
+<!-- STATS -->
+<!-- ===================== -->
+
+<section
+    id="stats"
+    class="bg-slate-950/60 border-y border-slate-800"
+>
+
+    <div class="max-w-7xl mx-auto px-5 py-16">
+
+
+        <h2 class="text-4xl font-black mb-3">
+
+            STATYSTYKI ZAWODNIKÓW
+
+        </h2>
+
+
+        <p class="text-slate-400 mb-8">
+
+            Kliknij nazwę kolumny aby posortować dane.
+
+        </p>
+
+
+        <div class="overflow-x-auto">
+
+
+            <table class="w-full bg-slate-900 rounded-2xl overflow-hidden">
+
+                <thead class="bg-slate-800">
+
+                    <tr>
+
+                        <th class="p-4 text-left">
+                            Zawodnik
+                        </th>
+
+                        <th
+                            class="p-4"
+                            onclick="sortStats('goals')"
+                        >
+                            Bramki ↕
+                        </th>
+
+                        <th
+                            class="p-4"
+                            onclick="sortStats('assists')"
+                        >
+                            Asysty ↕
+                        </th>
+
+                        <th
+                            class="p-4"
+                            onclick="sortStats('matches')"
+                        >
+                            Mecze ↕
+                        </th>
+
+                        <th class="p-4">
+                            🟨
+                        </th>
+
+                        <th class="p-4">
+                            🟥
+                        </th>
+
+                        <th class="p-4">
+                            Strzały
+                        </th>
+
+                        <th class="p-4">
+                            Celność podań
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="statsTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ===================== -->
+<!-- MATCHES -->
+<!-- ===================== -->
+
+<section
+    id="matches"
+    class="max-w-7xl mx-auto px-5 py-16"
+>
+
+
+    <div class="flex justify-between items-end mb-10">
+
+        <div>
+
+            <h2 class="text-4xl font-black">
+
+                MECZE
+
+            </h2>
+
+            <p class="text-slate-400 mt-2">
+
+                Ostatnie i nadchodzące spotkania
+
+            </p>
+
+        </div>
+
+
+        <span class="text-green-400 font-bold">
+
+            ● LIVE DATA READY
+
+        </span>
+
+    </div>
+
+
+    <div
+        id="matchesContainer"
+        class="grid md:grid-cols-2 gap-6"
+    ></div>
+
+
+</section>
+
+
+
+
+
+<!-- FOOTER -->
+
+<footer class="border-t border-slate-800">
+
+    <div
+        class="max-w-7xl mx-auto px-5 py-8 text-center text-slate-500"
+    >
+
+        © 2026 EL AUTISTICO
+
+    </div>
+
+</footer>
+
+
+
+<!-- ===================== -->
+<!-- MATCH MODAL -->
+<!-- ===================== -->
+
+<div
+    id="matchModal"
+    class="modal"
+>
+
+
+    <div
+        class="bg-slate-950 border border-slate-700 rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto p-8 relative"
+    >
+
+
+        <button
+
+            onclick="closeModal()"
+
+            class="absolute right-6 top-5 text-2xl"
+
+        >
+
+            ✕
+
+
+        </button>
+
+
+        <div
+            id="modalContent"
+        ></div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ===================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================== -->
+
+<script>
+
+
+const players = [
+
+    {
+
+        name: "Kuba Olczak",
+
+        position: "CF",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 90,
+
+        image:
+
+        "img/kuba.png",
+
+        stats: {
+
+            PAC: 82,
+
+            SHO: 93,
+
+            PAS: 82,
+
+            DRI: 85,
+
+            DEF: 70,
+
+            PHY: 89
+
+        }
+
+    },
+
+
+    {
+
+        name: "Marcel Łuczak",
+
+        position: "ST",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 90,
+
+        image:
+
+        "img/marczu.png",
+
+        stats: {
+
+            PAC: 88,
+
+            SHO: 90,
+
+            PAS: 70,
+
+            DRI: 90,
+
+            DEF: 70,
+
+            PHY: 81
+
+        }
+
+    },
+
+
+    {
+
+        name: "Kacper Dudulski",
+
+        position: "CM",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 85,
+
+        image:
+
+        "img/kacper.png",
+
+        stats: {
+
+            PAC: 82,
+
+            SHO: 86,
+
+            PAS: 87,
+
+            DRI: 80,
+
+            DEF: 80,
+
+            PHY: 69
+
+        }
+
+    },
+
+
+    {
+
+        name: "Jan Lichota",
+
+        position: "ST",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 87,
+
+        image:
+
+        "img/lichy.png",
+
+        stats: {
+
+            PAC: 80,
+
+            SHO: 85,
+
+            PAS: 86,
+
+            DRI: 88,
+
+            DEF: 68,
+
+            PHY: 63
+
+        }
+
+    },
+
+    {
+
+        name: "Antoni Nowiński",
+
+        position: "CM",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 84,
+
+        image:
+
+        "img/antos.png",
+
+        stats: {
+
+            PAC: 90,
+
+            SHO: 81,
+
+            PAS: 86,
+
+            DRI: 85,
+
+            DEF: 68,
+
+            PHY: 61
+
+        }
+
+    },
+
+    {
+
+        name: "Krzysztof Kosiewicz",
+
+        position: "CDM",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 89,
+
+        image:
+
+        "img/krzysiu.png",
+
+        stats: {
+
+            PAC: 90,
+
+            SHO: 88,
+
+            PAS: 80,
+
+            DRI: 90,
+
+            DEF: 83,
+
+            PHY: 75
+
+        }
+
+    },
+
+    {
+
+        name: "Mateusz Kurczewski",
+
+        position: "GK",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 88,
+
+        image:
+
+        "img/mati.png",
+
+        stats: {
+
+            PAR: 84,
+
+            LAP: 88,
+
+            WYK: 80,
+
+            REF: 92,
+
+            SZB: 80,
+
+            UST: 90
+
+        }
+
+    },
+
+    {
+
+        name: "Maks Klus",
+
+        position: "ST",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 88,
+
+        image:
+
+        "img/klus.png",
+
+        stats: {
+
+            PAC: 74,
+
+            SHO: 90,
+
+            PAS: 82,
+
+            DRI: 88,
+
+            DEF: 58,
+
+            PHY: 64
+
+        }
+
+    },
+
+    {
+
+        name: "Jakub Jabłoński",
+
+        position: "CB",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 82,
+
+        image:
+
+        "img/jablon.png",
+
+        stats: {
+
+            PAC: 80,
+
+            SHO: 79,
+
+            PAS: 82,
+
+            DRI: 75,
+
+            DEF: 80,
+
+            PHY: 84
+
+        }
+
+    },
+
+    {
+
+        name: "Hubert Brzeziński",
+
+        position: "CM",
+
+        club: "",
+
+        nation: "Polska",
+
+        ovr: 83,
+
+        image:
+
+        "img/hubert.png",
+
+        stats: {
+
+            PAC: 78,
+
+            SHO: 84,
+
+            PAS: 84,
+
+            DRI: 84,
+
+            DEF: 70,
+
+            PHY: 74
+
+        }
+
+    }
+
+];
+
+
+
+const stats = [
+
+    /*{
+
+        name: "Kylian Mbappé",
+
+        goals: 28,
+
+        assists: 10,
+
+        matches: 32,
+
+        yellow: 3,
+
+        red: 0,
+
+        shots: 110,
+
+        accuracy: "91%"
+
+    },*/
+
+];
+
+
+
+const matches = [
+
+    /*{
+
+        home: "Real Madrid",
+
+        away: "Barcelona",
+
+        score: "3 : 2",
+
+        date: "Wczoraj",
+
+        scorers: [
+
+            "Mbappé 21'",
+
+            "Vinícius 67'",
+
+            "Bellingham 89'",
+
+            "Lewandowski 34'",
+
+            "Yamal 75'"
+
+        ]
+
+    },
+
+
+    {
+
+        home: "Manchester City",
+
+        away: "Liverpool",
+
+        score: "VS",
+
+        date: "Dzisiaj 21:00",
+
+        scorers: []
+
+    }*/
+
+
+];
+
+
+
+/* =========================
+   RENDER PLAYERS
+========================= */
+
+
+function renderPlayers(list = players) {
+
+
+    const container =
+
+        document.getElementById(
+            "playersContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    list.forEach(player => {
+
+
+        const card = document.createElement("div");
+
+
+        card.className =
+
+            "player-card";
+
+
+        card.innerHTML = `
+
+
+            <div class="player-image">
+
+
+                <div class="player-rating">
+
+                    <div class="ovr">
+
+                        ${player.ovr}
+
+                    </div>
+
+
+                    <div class="position">
+
+                        ${player.position}
+
+                    </div>
+
+                </div>
+
+
+                <img
+                    src="${player.image}"
+                    alt="${player.name}"
+                >
+
+            </div>
+
+
+            <div class="player-info">
+
+
+                <div class="player-name">
+
+                    ${player.name}
+
+                </div>
+
+
+                <div class="player-club">
+
+                    🇫🇷 ${player.nation}
+
+                    •
+
+                    ${player.club}
+
+                </div>
+
+
+                <div class="player-stats">
+
+
+                    ${Object.entries(player.stats)
+
+                        .map(
+
+                            ([key, value]) =>
+
+                            `
+
+                            <div class="stat">
+
+                                <b>${value}</b>
+
+                                <span>${key}</span>
+
+                            </div>
+
+                            `
+
+                        )
+
+                        .join("")
+
+                    }
+
+
+                </div>
+
+
+            </div>
+
+
+        `;
+
+
+        container.appendChild(card);
+
+
+    });
+
+
+}
+
+
+
+/* =========================
+   SEARCH
+========================= */
+
+
+document
+    .getElementById("search")
+    .addEventListener(
+        "input",
+        filterPlayers
+    );
+
+
+document
+    .getElementById("positionFilter")
+    .addEventListener(
+        "change",
+        filterPlayers
+    );
+
+
+
+function filterPlayers() {
+
+
+    const search =
+
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase();
+
+
+    const position =
+
+        document
+            .getElementById("positionFilter")
+            .value;
+
+
+    const filtered = players.filter(player => {
+
+
+        return (
+
+            player.name
+                .toLowerCase()
+                .includes(search)
+
+            &&
+
+            (
+
+                position === ""
+
+                ||
+
+                player.position === position
+
+            )
+
+        );
+
+
+    });
+
+
+    renderPlayers(filtered);
+
+
+}
+
+
+
+/* =========================
+   STATS
+========================= */
+
+
+function renderStats() {
+
+
+    const table =
+
+        document.getElementById(
+            "statsTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    stats.forEach(player => {
+
+
+        table.innerHTML += `
+
+            <tr
+                class="border-t border-slate-800 hover:bg-slate-800/50"
+            >
+
+                <td class="p-4 font-bold">
+
+                    ${player.name}
+
+                </td>
+
+
+                <td class="p-4 text-center">
+
+                    ${player.goals}
+
+                </td>
+
+
+                <td class="p-4 text-center">
+
+                    ${player.assists}
+
+                </td>
+
+
+                <td class="p-4 text-center">
+
+                    ${player.matches}
+
+                </td>
+
+
+                <td class="p-4 text-center">
+
+                    ${player.yellow}
+
+                </td>
+
+
+                <td class="p-4 text-center">
+
+                    ${player.red}
+
+                </td>
+
+
+                <td class="p-4 text-center">
+
+                    ${player.shots}
+
+                </td>
+
+
+                <td class="p-4 text-center">
+
+                    ${player.accuracy}
+
+                </td>
+
+
+            </tr>
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+function sortStats(key) {
+
+
+    stats.sort(
+
+        (a,b) =>
+
+        b[key] - a[key]
+
+    );
+
+
+    renderStats();
+
+
+}
+
+
+
+/* =========================
+   MATCHES
+========================= */
+
+
+function renderMatches() {
+
+
+    const container =
+
+        document.getElementById(
+            "matchesContainer"
+        );
+
+
+    matches.forEach((match,index) => {
+
+
+        container.innerHTML += `
+
+
+            <div
+
+                onclick="openMatch(${index})"
+
+                class="match-card cursor-pointer bg-slate-900 border border-slate-800 rounded-2xl p-7"
+
+            >
+
+
+                <div
+                    class="text-center text-slate-400 text-sm mb-5"
+                >
+
+                    ${match.date}
+
+                </div>
+
+
+                <div
+                    class="flex items-center justify-between"
+                >
+
+
+                    <div
+                        class="font-bold text-lg"
+                    >
+
+                        ${match.home}
+
+                    </div>
+
+
+                    <div
+                        class="text-3xl font-black text-blue-400"
+                    >
+
+                        ${match.score}
+
+                    </div>
+
+
+                    <div
+                        class="font-bold text-lg"
+                    >
+
+                        ${match.away}
+
+                    </div>
+
+
+                </div>
+
+
+                <div
+                    class="text-center mt-5 text-blue-400 text-sm"
+                >
+
+                    Kliknij aby zobaczyć szczegóły →
+
+                </div>
+
+
+            </div>
+
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+/* =========================
+   MATCH MODAL
+========================= */
+
+
+function openMatch(index) {
+
+
+    const match = matches[index];
+
+
+    const modal =
+
+        document.getElementById(
+            "matchModal"
+        );
+
+
+    const content =
+
+        document.getElementById(
+            "modalContent"
+        );
+
+
+    content.innerHTML = `
+
+
+        <div class="text-center mb-10">
+
+
+            <div
+                class="text-slate-400"
+            >
+
+                ${match.date}
+
+            </div>
+
+
+            <h2
+                class="text-3xl md:text-5xl font-black mt-4"
+            >
+
+                ${match.home}
+
+                <span class="text-blue-500">
+
+                    ${match.score}
+
+                </span>
+
+                ${match.away}
+
+            </h2>
+
+
+        </div>
+
+
+        <div class="grid md:grid-cols-2 gap-10">
+
+
+            <div>
+
+
+                <h3
+                    class="font-bold text-xl mb-5"
+                >
+
+                    ⚽ Bramki
+
+                </h3>
+
+
+                <div class="space-y-3">
+
+
+                    ${
+
+                        match.scorers.length
+
+                        ?
+
+                        match.scorers.map(
+
+                            scorer =>
+
+                            `
+
+                            <div
+                                class="bg-slate-900 p-4 rounded-xl"
+                            >
+
+                                ${scorer}
+
+                            </div>
+
+                            `
+
+                        ).join("")
+
+                        :
+
+                        "Brak danych"
+
+                    }
+
+
+                </div>
+
+
+            </div>
+
+
+            <div>
+
+
+                <h3
+                    class="font-bold text-xl mb-5"
+                >
+
+                    📋 Wyjściowy skład
+
+                </h3>
+
+
+                <div
+                    class="pitch"
+                >
+
+
+                    <div
+                        class="pitch-line"
+                    ></div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:50%;top:85%"
+                    >
+
+                        GK
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:20%;top:70%"
+                    >
+
+                        LB
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:40%;top:70%"
+                    >
+
+                        CB
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:60%;top:70%"
+                    >
+
+                        CB
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:80%;top:70%"
+                    >
+
+                        RB
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:30%;top:45%"
+                    >
+
+                        CM
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:50%;top:45%"
+                    >
+
+                        CM
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:70%;top:45%"
+                    >
+
+                        CM
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:25%;top:20%"
+                    >
+
+                        LW
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:50%;top:15%"
+                    >
+
+                        ST
+
+                    </div>
+
+
+                    <div
+                        class="player-dot"
+                        style="left:75%;top:20%"
+                    >
+
+                        RW
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    `;
+
+
+    modal.classList.add(
+        "active"
+    );
+
+
+}
+
+
+
+function closeModal() {
+
+
+    document
+        .getElementById(
+            "matchModal"
+        )
+        .classList.remove(
+            "active"
+        );
+
+
+}
+
+
+
+/* =========================
+   INIT
+========================= */
+
+
+renderPlayers();
+
+renderStats();
+
+renderMatches();
+
+
+</script>
+
+
+</body>
+
+</html>
