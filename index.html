@@ -188,6 +188,95 @@
         0 25px 60px rgba(243,154,25,.5),
         inset 0 0 30px rgba(255,255,255,.3);
 }
+/* =========================
+   TOTW CARD
+========================= */
+
+.player-card.totw-card {
+    background:
+        linear-gradient(
+            145deg,
+            #1a1a1a 0%,
+            #050505 45%,
+            #3b2a00 100%
+        );
+
+    border: 2px solid #d4af37;
+
+    color: #d4af37;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.7),
+        inset 0 0 30px rgba(212,175,55,.15);
+}
+
+.player-card.totw-card .player-rating .ovr,
+.player-card.totw-card .player-rating .position,
+.player-card.totw-card .player-name,
+.player-card.totw-card .player-club,
+.player-card.totw-card .stat b,
+.player-card.totw-card .stat span {
+    color: #f5d76e;
+}
+
+.player-card.totw-card .player-stats {
+    border-top:
+        1px solid rgba(212,175,55,.6);
+}
+
+.player-card.totw-card:hover {
+    box-shadow:
+        0 25px 60px rgba(212,175,55,.35),
+        inset 0 0 35px rgba(212,175,55,.2);
+}
+
+
+/* =========================
+   MAN OF THE MATCH CARD
+========================= */
+
+.player-card.motm-card {
+    background:
+        linear-gradient(
+            145deg,
+            #4fd1ff 0%,
+            #1677ff 35%,
+            #073b9c 70%,
+            #031a5a 100%
+        );
+
+    border: 2px solid #8eeaff;
+
+    color: white;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.55),
+        inset 0 0 35px rgba(255,255,255,.2);
+}
+
+.player-card.motm-card .player-rating .ovr,
+.player-card.motm-card .player-rating .position,
+.player-card.motm-card .player-name,
+.player-card.motm-card .player-club,
+.player-card.motm-card .stat b,
+.player-card.motm-card .stat span {
+    color: #ffffff;
+
+    text-shadow:
+        0 2px 5px rgba(0,0,0,.4);
+}
+
+.player-card.motm-card .player-stats {
+    border-top:
+        1px solid rgba(255,255,255,.55);
+}
+
+.player-card.motm-card:hover {
+    box-shadow:
+        0 25px 60px rgba(79,209,255,.5),
+        inset 0 0 40px rgba(255,255,255,.25);
+}
+        
 
 
         .player-image {
@@ -1728,13 +1817,17 @@ function renderPlayers(list = players) {
         const card = document.createElement("div");
 
 
-        card.className =
+ card.className =
     `player-card ${
         player.icon
             ? "icon-card"
             : player.hero
                 ? "hero-card"
-                : ""
+                : player.totw
+                    ? "totw-card"
+                    : player.motm
+                        ? "motm-card"
+                        : ""
     }`;
 
 
